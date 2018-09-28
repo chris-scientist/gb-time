@@ -1,5 +1,6 @@
 // author: chris-scientist
 // created at: 27/09/2018
+// updated at: 28/09/2018
 
 #include "TimeView.h"
 
@@ -21,7 +22,7 @@ void TimeView::paintStartWindow() const {
   gb.display.println("");
   gb.display.println("");
   gb.display.println("");
-  gb.display.println("(A) Pour demarrer");
+  gb.display.println(Lang::getToStart());
 }
 
 void TimeView::paintResetConfirmWindow() const {
@@ -30,9 +31,9 @@ void TimeView::paintResetConfirmWindow() const {
   gb.display.println("");
   gb.display.println("");
   gb.display.println("");
-  gb.display.println("Souhaitez-vous");
-  gb.display.println("(A) reinitialiser");
-  gb.display.println("ou (B) reprendre ?");
+  gb.display.println(Lang::getWouldYouLike());
+  gb.display.println(Lang::getToReset());
+  gb.display.println(Lang::getToRestart());
 }
 
 void TimeView::paintLimitOfTimeWindow() const {
@@ -41,34 +42,34 @@ void TimeView::paintLimitOfTimeWindow() const {
   gb.display.println("");
   gb.display.println("");
   gb.display.println("");
-  gb.display.println("ERREUR:");
-  gb.display.println("Limite atteinte");
+  gb.display.println(Lang::getError());
+  gb.display.println(Lang::getLimitReached());
   gb.display.setColor(BROWN);
   gb.display.println("");
-  gb.display.println("(A) reinitialiser");
+  gb.display.println(Lang::getToReset());
 }
 
 void TimeView::paintBasicMode(int aNbFrames, int aTimeInFrames, const int * aTime, bool anActivateClocker) {
   gb.display.setFontSize(1);
   gb.display.setColor(BROWN);
   if(anActivateClocker) {
-    gb.display.println("(A) Pause/Reprendre");
+    gb.display.println(Lang::getStartPause());
   } else {
-    gb.display.println("|| Pause");
+    gb.display.println(Lang::getPause());
   }
   gb.display.setColor(WHITE);
-  gb.display.printf("Frames  : %d", aNbFrames);
+  gb.display.printf("%s %d", Lang::getFrame(), aNbFrames);
   gb.display.println("");
   gb.display.println("");
-  gb.display.printf("Annees  : %d", aTime[TimeModel::YEARS_NUMBER]);
+  gb.display.printf("%s %d", Lang::getYears(), aTime[TimeModel::YEARS_NUMBER]);
   gb.display.println("");
-  gb.display.printf("Jours   : %d", aTime[TimeModel::DAYS_NUMBER]);
+  gb.display.printf("%s %d", Lang::getDays(), aTime[TimeModel::DAYS_NUMBER]);
   gb.display.println("");
-  gb.display.printf("Heures  : %d", aTime[TimeModel::HOURS_NUMBER]);
+  gb.display.printf("%s %d", Lang::getHours(), aTime[TimeModel::HOURS_NUMBER]);
   gb.display.println("");
-  gb.display.printf("Minutes : %d", aTime[TimeModel::MINUTES_NUMBER]);
+  gb.display.printf("%s %d", Lang::getMinutes(), aTime[TimeModel::MINUTES_NUMBER]);
   gb.display.println("");
-  gb.display.printf("Secondes: %d", aTime[TimeModel::SECONDS_NUMBER]);
+  gb.display.printf("%s %d", Lang::getSeconds(), aTime[TimeModel::SECONDS_NUMBER]);
   gb.display.println("");
   gb.display.println("");
   gb.display.printf("%d", aTimeInFrames);
@@ -78,9 +79,9 @@ void TimeView::paintChronoMode(int aNbFrames, int aTimeInFrames, const int * aTi
   gb.display.setFontSize(1);
   gb.display.setColor(BROWN);
   if(anActivateClocker) {
-    gb.display.println("(A) Pause/Reprendre");
+    gb.display.println(Lang::getStartPause());
   } else {
-    gb.display.println("|| Pause");
+    gb.display.println(Lang::getPause());
   }
   gb.display.setColor(WHITE);
   gb.display.println("");

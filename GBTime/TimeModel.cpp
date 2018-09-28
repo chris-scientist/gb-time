@@ -3,7 +3,7 @@
 
 #include "TimeModel.h"
 
-TimeModel::TimeModel() : timeInFrames(0), nbFrames(1), maxFrames(FRAME_PER_SECONDS), _isMaxTime(false) {
+TimeModel::TimeModel() : timeInFrames(2147483647), nbFrames(1), maxFrames(FRAME_PER_SECONDS), _isMaxTime(false) {
   
 }
 

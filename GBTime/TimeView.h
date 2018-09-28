@@ -1,5 +1,6 @@
 // author: chris-scientist
 // created at: 27/09/2018
+// updated at: 28/09/2018
 // description: vue du chronomètre
 
 #ifndef TIMEVIEW
@@ -9,6 +10,7 @@
 
 #include "TimeModel.h"
 #include "Constantes.h"
+#include "Lang.h"
 
 class TimeView {
   private:
