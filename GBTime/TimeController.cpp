@@ -1,5 +1,6 @@
 // author: chris-scientist
 // created at: 27/09/2018
+// updated at: 28/09/2018
 
 #include "TimeController.h"
 
@@ -23,17 +24,8 @@ void TimeController::run() {
       reset = false;
     }
     
-  } else if(timeModel->isMaxTime()) {
-    // Si le chronomètre a atteint la limite...
-
-    // une pression sur A pour continuer
-    if(gb.buttons.pressed(BUTTON_A)) {
-      timeModel->reset();
-      activate = false;
-    }
-    
   } else {
-    // Si le chronomètre est en cours alors...
+    // Si le chronomètre est en cours ou en pause alors...
     
     // 1. une pression sur A modifie l'état (pause/en cours)
     if(gb.buttons.pressed(BUTTON_A)) {
@@ -50,24 +42,27 @@ void TimeController::run() {
 }
 
 void TimeController::runTime() {
-  // Si le chronomètre est actif et que la limite n'est pas atteinte alors on incrémente la durée
-  if(activate && !timeModel->isMaxTime()) {
+  // Si le chronomètre est actif alors on incrémente la durée
+  if(activate) {
+    if(timeModel->getBeginTime() == 0) {
+      timeModel->initBeginTime();
+    }
     timeModel->incrementTime();
+  } else {
+    timeModel->pause();
   }
 }
 
 void TimeController::paint() {
-  if(!activate && timeModel->getNbFrames() == 1 && timeModel->getTimeInFrames() == 0) {
+  if(!activate && timeModel->getTimeInFrames() == 0) {
     // Si le chronomètre est inactif et à "zéro" alors on affiche l'écran de démarrage
     timeView->paintStartWindow();
   } else if(reset) {
     // Si le chronomètre est sur le point d'être réinitialisé alors on affichge l'écran pour confirmer ou non l'opération
     timeView->paintResetConfirmWindow();
-  } else if(timeModel->isMaxTime()) {
-    timeView->paintLimitOfTimeWindow();
   } else {
     // Sinon on affiche le chronomètre
-    timeView->paint(TimeView::CHRONO_MODE, timeModel->getNbFrames(), timeModel->getTimeInFrames(), timeModel->getTime(), activate);
+    timeView->paint(TimeView::CHRONO_MODE, timeModel->getTimeInFrames() + timeModel->getTempTime(), timeModel->getTime(), activate);
   }
 }
 

@@ -5,14 +5,10 @@
 
 const char* Lang::daysFR = "Jours   :";
 const char* Lang::daysEN = "Days    :";
-const char* Lang::errorFR = "ERREUR:";
-const char* Lang::errorEN = "ERROR:";
 const char* Lang::frameFR = "Frames  :";
 const char* Lang::frameEN = "Frames  :";
 const char* Lang::hoursFR = "Heures  :";
 const char* Lang::hoursEN = "Hours   :";
-const char* Lang::limitReachedFR = "Limite atteinte";
-const char* Lang::limitReachedEN = "Limit reached";
 const char* Lang::minutesFR = "Minutes :";
 const char* Lang::minutesEN = "Minutes :";
 const char* Lang::pauseFR = "|| Pause";
@@ -29,8 +25,6 @@ const char* Lang::toStartFR = "(A) Pour demarrer";
 const char* Lang::toStartEN = "(A) To start";
 const char* Lang::wouldYouLikeFR = "Souhaitez-vous";
 const char* Lang::wouldYouLikeEN = "Would you like";
-const char* Lang::yearsFR = "Annees  :";
-const char* Lang::yearsEN = "Years   :";
 
 const char* Lang::getDays() {
   const MultiLang daysLang[] = {
@@ -39,15 +33,6 @@ const char* Lang::getDays() {
   };
 
   return gb.language.get(daysLang);
-}
-
-const char* Lang::getError() {
-  const MultiLang errorLang[] = {
-    { LANG_EN, Lang::errorEN },
-    { LANG_FR, Lang::errorFR }
-  };
-
-  return gb.language.get(errorLang);
 }
 
 const char* Lang::getFrame() {
@@ -66,15 +51,6 @@ const char* Lang::getHours() {
   };
 
   return gb.language.get(hoursLang);
-}
-
-const char* Lang::getLimitReached() {
-  const MultiLang limitReachedLang[] = {
-    { LANG_EN, Lang::limitReachedEN },
-    { LANG_FR, Lang::limitReachedFR }
-  };
-
-  return gb.language.get(limitReachedLang);
 }
 
 const char* Lang::getMinutes() {
@@ -147,14 +123,5 @@ const char* Lang::getWouldYouLike() {
   };
 
   return gb.language.get(wouldYouLikeLang);
-}
-
-const char* Lang::getYears() {
-  const MultiLang yearsLang[] = {
-    { LANG_EN, Lang::yearsEN },
-    { LANG_FR, Lang::yearsFR }
-  };
-
-  return gb.language.get(yearsLang);
 }
 

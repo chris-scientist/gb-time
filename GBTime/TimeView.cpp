@@ -4,13 +4,13 @@
 
 #include "TimeView.h"
 
-void TimeView::paint(const int aMode, int aNbFrames, int aTimeInFrames, const int * aTime, bool anActivateClocker) {
+void TimeView::paint(const int aMode, int aTimeInFrames, const int * aTime, bool anActivateClocker) {
   switch(aMode) {
     case BASIC_MODE:
-      paintBasicMode(aNbFrames, aTimeInFrames, aTime, anActivateClocker);
+      paintBasicMode(aTimeInFrames, aTime, anActivateClocker);
     break;
     default:
-      paintChronoMode(aNbFrames, aTimeInFrames, aTime, anActivateClocker);
+      paintChronoMode(aTimeInFrames, aTime, anActivateClocker);
   }
 }
 
@@ -36,20 +36,7 @@ void TimeView::paintResetConfirmWindow() const {
   gb.display.println(Lang::getToRestart());
 }
 
-void TimeView::paintLimitOfTimeWindow() const {
-  gb.display.setFontSize(1);
-  gb.display.setColor(WHITE);
-  gb.display.println("");
-  gb.display.println("");
-  gb.display.println("");
-  gb.display.println(Lang::getError());
-  gb.display.println(Lang::getLimitReached());
-  gb.display.setColor(BROWN);
-  gb.display.println("");
-  gb.display.println(Lang::getToReset());
-}
-
-void TimeView::paintBasicMode(int aNbFrames, int aTimeInFrames, const int * aTime, bool anActivateClocker) {
+void TimeView::paintBasicMode(int aTimeInFrames, const int * aTime, bool anActivateClocker) {
   gb.display.setFontSize(1);
   gb.display.setColor(BROWN);
   if(anActivateClocker) {
@@ -58,10 +45,6 @@ void TimeView::paintBasicMode(int aNbFrames, int aTimeInFrames, const int * aTim
     gb.display.println(Lang::getPause());
   }
   gb.display.setColor(WHITE);
-  gb.display.printf("%s %d", Lang::getFrame(), aNbFrames);
-  gb.display.println("");
-  gb.display.println("");
-  gb.display.printf("%s %d", Lang::getYears(), aTime[TimeModel::YEARS_NUMBER]);
   gb.display.println("");
   gb.display.printf("%s %d", Lang::getDays(), aTime[TimeModel::DAYS_NUMBER]);
   gb.display.println("");
@@ -72,10 +55,10 @@ void TimeView::paintBasicMode(int aNbFrames, int aTimeInFrames, const int * aTim
   gb.display.printf("%s %d", Lang::getSeconds(), aTime[TimeModel::SECONDS_NUMBER]);
   gb.display.println("");
   gb.display.println("");
-  gb.display.printf("%d", aTimeInFrames);
+  gb.display.printf("%lu", aTimeInFrames);
 }
 
-void TimeView::paintChronoMode(int aNbFrames, int aTimeInFrames, const int * aTime, bool anActivateClocker) {
+void TimeView::paintChronoMode(int aTimeInFrames, const int * aTime, bool anActivateClocker) {
   gb.display.setFontSize(1);
   gb.display.setColor(BROWN);
   if(anActivateClocker) {
@@ -85,17 +68,11 @@ void TimeView::paintChronoMode(int aNbFrames, int aTimeInFrames, const int * aTi
   }
   gb.display.setColor(WHITE);
   gb.display.println("");
-  // Afficher les années (s'il y en a)
-  int nbYears = aTime[TimeModel::YEARS_NUMBER];
-  if(nbYears > 0) {
-    gb.display.printf("%d y ", nbYears);
-  }
-  // Afficher les jours sur la même ligne (s'il y en a une ou plusieurs années)
+  // Afficher les jours (s'il y en a)
   int nbDays = aTime[TimeModel::DAYS_NUMBER];
-  if(nbYears > 0) {
-    gb.display.printf("%d d", nbDays);
+  if(nbDays > 0) {
+    gb.display.printf("%d d ", nbDays);
   }
-  gb.display.println("");
   
   // Sur une nouvelle ligne afficher les heures / minutes et secondes
   int nbHours = aTime[TimeModel::HOURS_NUMBER];
@@ -113,12 +90,5 @@ void TimeView::paintChronoMode(int aNbFrames, int aTimeInFrames, const int * aTi
     gb.display.print("0");
   }
   gb.display.printf("%d s", nbSeconds);
-
-  // Afficher un jauge
-  int percent = (int)((aNbFrames*78)/FRAME_PER_SECONDS);
-  gb.display.setColor(WHITE);
-  gb.display.drawRect(0, 60, 80, 4);
-  gb.display.setColor(BROWN);
-  gb.display.fillRect(1, 61, percent, 2);
 }
 

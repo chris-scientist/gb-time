@@ -1,46 +1,42 @@
 // author: chris-scientist
 // created at: 27/09/2018
+// updated at: 28/09/2018
 
 #include "TimeModel.h"
 
-TimeModel::TimeModel() : timeInFrames(0), nbFrames(1), maxFrames(FRAME_PER_SECONDS), _isMaxTime(false) {
-  
-}
-
-TimeModel::TimeModel(int aMaxFrames) : timeInFrames(0), nbFrames(1), maxFrames(aMaxFrames), _isMaxTime(false) {
-  
-}
-
-TimeModel::TimeModel(int aTimeInFrames, int aNbFrames, int aMaxFrames) : timeInFrames(aTimeInFrames), nbFrames(aNbFrames), maxFrames(aMaxFrames), _isMaxTime(false) {
+TimeModel::TimeModel() : timeInFrames(0), beginTime(0), tempTime(0) {
   
 }
 
 void TimeModel::reset() {
   timeInFrames = 0;
-  nbFrames = 1;
-  _isMaxTime = false;
+  tempTime = 0;
+  beginTime = 0;
+}
+
+void TimeModel::initBeginTime() {
+  beginTime = millis();
+}
+
+void TimeModel::pause() {
+  timeInFrames += tempTime;
+  tempTime = 0;
+  beginTime = 0;
 }
 
 void TimeModel::computeTime() {
-  int rest = timeInFrames;
+  unsigned long rest = timeInFrames + tempTime;
 
-  const int YEARS_IN_FRAMES   = 365*24*60*60;
-  const int DAYS_IN_FRAMES    = 24*60*60;
-  const int HOURS_IN_FRAMES   = 60*60;
-  const int MINUTES_IN_FRAMES = 60;
-  const int SECONDS_IN_FRAMES = 1;
+  const unsigned long DAYS_IN_FRAMES    = 24*60*60*1000;
+  const unsigned long HOURS_IN_FRAMES   = 60*60*1000;
+  const unsigned long MINUTES_IN_FRAMES = 60*1000;
+  const unsigned long SECONDS_IN_FRAMES = 1000;
 
-  int nbYears = 0;
   int nbDays = 0;
   int nbHours = 0;
   int nbMinutes = 0;
   int nbSeconds = 0;
 
-  // Calculer les années
-  if(rest >= YEARS_IN_FRAMES) {
-    nbYears = (int)(rest / YEARS_IN_FRAMES);
-    rest = (rest - (nbYears * YEARS_IN_FRAMES));
-  }
   // Calculer les jours
   if(rest >= DAYS_IN_FRAMES) {
     nbDays = (int)(rest / DAYS_IN_FRAMES);
@@ -62,7 +58,6 @@ void TimeModel::computeTime() {
     rest = (rest - (nbSeconds * SECONDS_IN_FRAMES));
   }
 
-  valueOfTime[YEARS_NUMBER] = nbYears;
   valueOfTime[DAYS_NUMBER] = nbDays;
   valueOfTime[HOURS_NUMBER] = nbHours;
   valueOfTime[MINUTES_NUMBER] = nbMinutes;
@@ -74,28 +69,19 @@ const int * TimeModel::getTime() {
   return valueOfTime;
 }
 
-const int TimeModel::getNbFrames() const {
-  return nbFrames;
-}
-
 const int TimeModel::getTimeInFrames() const {
   return timeInFrames;
 }
 
 void TimeModel::incrementTime() {
-  if(nbFrames == maxFrames) {
-    nbFrames = 1;
-    if(timeInFrames == MAX_INT) {
-      _isMaxTime = true;
-    } else {
-      timeInFrames++;
-    }
-  } else {
-    nbFrames++;
-  }
+  tempTime = millis() - beginTime;
 }
 
-bool TimeModel::isMaxTime() const {
-  return _isMaxTime;
+unsigned long TimeModel::getBeginTime() {
+  return beginTime;
+}
+
+unsigned long TimeModel::getTempTime() {
+  return tempTime;
 }
 

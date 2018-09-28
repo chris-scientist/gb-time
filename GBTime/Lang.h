@@ -10,14 +10,10 @@ class Lang {
   private:
     static const char* daysFR;
     static const char* daysEN;
-    static const char* errorFR;
-    static const char* errorEN;
     static const char* frameFR;
     static const char* frameEN;
     static const char* hoursFR;
     static const char* hoursEN;
-    static const char* limitReachedFR;
-    static const char* limitReachedEN;
     static const char* minutesFR;
     static const char* minutesEN;
     static const char* pauseFR;
@@ -34,14 +30,10 @@ class Lang {
     static const char* toStartEN;
     static const char* wouldYouLikeFR;
     static const char* wouldYouLikeEN;
-    static const char* yearsFR;
-    static const char* yearsEN;
   public:
     static const char* getDays();
-    static const char* getError();
     static const char* getFrame();
     static const char* getHours();
-    static const char* getLimitReached();
     static const char* getMinutes();
     static const char* getPause();
     static const char* getSeconds();
@@ -50,7 +42,6 @@ class Lang {
     static const char* getToRestart();
     static const char* getToStart();
     static const char* getWouldYouLike();
-    static const char* getYears();
 };
 
 #endif

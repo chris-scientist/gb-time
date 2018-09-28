@@ -3,7 +3,6 @@
 
 #include <Gamebuino-Meta.h>
 
-#include "Constantes.h"
 #include "TimeController.h"
 #include "TimeModel.h"
 #include "TimeView.h"
@@ -13,8 +12,6 @@ TimeController * timeController;
 void setup() {
   // initialisation de la gamebuino
   gb.begin();
-  // initialisation du nombre d'images par secondes
-  gb.setFrameRate(FRAME_PER_SECONDS);
   // initialisation de l'application
   timeController = new TimeController(new TimeModel(), new TimeView());
 }
