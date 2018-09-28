@@ -1,7 +1,7 @@
 
 # Chronomètre pour Gamebuino META
 
-v1.2.0
+v1.3.0
 
 ## Présentation
 
@@ -11,11 +11,17 @@ Par défaut, on affiche le mode "CHRONO".
 
 ## Historique des version
 
+### v2.0.0
+
+Amélioration de la fiabilité du chronomètre.
+
+[Télécharger les sources](https://github.com/chris-scientist/gb-time/archive/v2.0.0.zip)
+
 ### v1.1.1
 
 Correction de bugs (traduction et initialisation du chronomètre).
 
-[Téléchager les sources](https://github.com/chris-scientist/gb-time/archive/v1.1.1.zip)
+[Télécharger les sources](https://github.com/chris-scientist/gb-time/archive/v1.1.1.zip)
 
 ### v1.1.0
 
