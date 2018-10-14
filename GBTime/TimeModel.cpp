@@ -1,36 +1,42 @@
 // author: chris-scientist
 // created at: 27/09/2018
-// updated at: 28/09/2018
+// updated at: 14/10/2018
 
 #include "TimeModel.h"
 
-TimeModel::TimeModel() : timeInFrames(0), beginTime(0), tempTime(0) {
-  
+TimeModel::TimeModel() : timeInSeconds(0), tempTime(0), initialized(false) {
+  rtc.begin();
+  rtc.setY2kEpoch(0);
 }
 
 void TimeModel::reset() {
-  timeInFrames = 0;
+  timeInSeconds = 0;
   tempTime = 0;
-  beginTime = 0;
+  initialized = false;
 }
 
-void TimeModel::initBeginTime() {
-  beginTime = millis();
+void TimeModel::initTime() {
+  if(! initialized) {
+    rtc.setY2kEpoch(0);
+    initialized = true;
+  }
 }
 
 void TimeModel::pause() {
-  timeInFrames += tempTime;
-  tempTime = 0;
-  beginTime = 0;
+  if(tempTime != 0) {
+    timeInSeconds += tempTime;
+    tempTime = 0;
+    initialized = false;
+  }
 }
 
 void TimeModel::computeTime() {
-  unsigned long rest = timeInFrames + tempTime;
+  unsigned long rest = timeInSeconds + tempTime;
 
-  const unsigned long DAYS_IN_FRAMES    = 24*60*60*1000;
-  const unsigned long HOURS_IN_FRAMES   = 60*60*1000;
-  const unsigned long MINUTES_IN_FRAMES = 60*1000;
-  const unsigned long SECONDS_IN_FRAMES = 1000;
+  const unsigned long DAYS_IN_FRAMES    = 24*60*60*1;
+  const unsigned long HOURS_IN_FRAMES   = 60*60*1;
+  const unsigned long MINUTES_IN_FRAMES = 60*1;
+  const unsigned long SECONDS_IN_FRAMES = 1;
 
   int nbDays = 0;
   int nbHours = 0;
@@ -69,19 +75,15 @@ const int * TimeModel::getTime() {
   return valueOfTime;
 }
 
-const int TimeModel::getTimeInFrames() const {
-  return timeInFrames;
+const unsigned int TimeModel::getTimeInSeconds() const {
+  return timeInSeconds;
 }
 
 void TimeModel::incrementTime() {
-  tempTime = millis() - beginTime;
+  tempTime = rtc.getY2kEpoch();
 }
 
-unsigned long TimeModel::getBeginTime() {
-  return beginTime;
-}
-
-unsigned long TimeModel::getTempTime() {
+unsigned int TimeModel::getTempTime() {
   return tempTime;
 }
 

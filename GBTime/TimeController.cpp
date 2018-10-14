@@ -1,6 +1,6 @@
 // author: chris-scientist
 // created at: 27/09/2018
-// updated at: 28/09/2018
+// updated at: 14/10/2018
 
 #include "TimeController.h"
 
@@ -44,8 +44,8 @@ void TimeController::run() {
 void TimeController::runTime() {
   // Si le chronomètre est actif alors on incrémente la durée
   if(activate) {
-    if(timeModel->getBeginTime() == 0) {
-      timeModel->initBeginTime();
+    if(timeModel->getTempTime() == 0) {
+      timeModel->initTime();
     }
     timeModel->incrementTime();
   } else {
@@ -54,7 +54,7 @@ void TimeController::runTime() {
 }
 
 void TimeController::paint() {
-  if(!activate && timeModel->getTimeInFrames() == 0) {
+  if(!activate && timeModel->getTimeInSeconds() == 0) {
     // Si le chronomètre est inactif et à "zéro" alors on affiche l'écran de démarrage
     timeView->paintStartWindow();
   } else if(reset) {
@@ -62,7 +62,7 @@ void TimeController::paint() {
     timeView->paintResetConfirmWindow();
   } else {
     // Sinon on affiche le chronomètre
-    timeView->paint(TimeView::CHRONO_MODE, timeModel->getTimeInFrames() + timeModel->getTempTime(), timeModel->getTime(), activate);
+    timeView->paint(TimeView::CHRONO_MODE, timeModel->getTimeInSeconds() + timeModel->getTempTime(), timeModel->getTime(), activate);
   }
 }
 

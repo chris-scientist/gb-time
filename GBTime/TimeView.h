@@ -18,7 +18,7 @@ class TimeView {
   public:
     static const int BASIC_MODE = 1;
     static const int CHRONO_MODE = 2;
-    
+
     void paint(const int aMode, int aTimeInFrames, const int * aTime, bool anActivateClocker);
     void paintStartWindow() const;
     void paintResetConfirmWindow() const;
