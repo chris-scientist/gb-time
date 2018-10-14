@@ -1,7 +1,7 @@
 
 # Chronomètre pour Gamebuino META
 
-v1.3.0
+v1.4.0
 
 ## Présentation
 
@@ -10,6 +10,10 @@ Ce chronomètre n'est pas aussi fiable qu'un vrai ! Ne vous en servez donc pas po
 Par défaut, on affiche le mode "CHRONO".
 
 ## Historique des version
+
+### v3.0.0
+
+Amélioration de la fiabilité du chronomètre via l'utilisation de RTC.
 
 ### v2.0.0
 
